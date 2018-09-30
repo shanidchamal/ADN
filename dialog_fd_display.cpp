@@ -134,6 +134,6 @@ void Dialog_fd_display::on_graph_Button_clicked()
 
     QProcess process;
     process.setProgram("graphPY.py");
-    process.start("python graphPY.py");
+    process.start("python /home/shanid/QtWorkSpace/ADN/graphPY.py");
     process.waitForFinished(-1);
 }
