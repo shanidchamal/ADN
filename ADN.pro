@@ -37,7 +37,6 @@ FORMS += \
         mainwindow.ui \
     dialog_fd_input.ui \
     dialog_fd_display.ui \
-    dialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
