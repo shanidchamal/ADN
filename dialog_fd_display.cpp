@@ -73,7 +73,10 @@ char* Dialog_fd_display::print_dep_fd(int count) {
     return fds;
 }
 
-int Dialog_fd_display::create_dg_edges(char det_edge[][30],char dep_edge[][30]) {
+int Dialog_fd_display::create_dg_edges(char det_edge[][30],char dep_edge[][30],char reflex_det_edge[][30],char reflex_dep_edge[][30],int *n) {
+    char sub_reflex_edge[30];
+    char tok[]=",";
+    char * poi_sub_reflex_edge=(char *)sub_reflex_edge;
     int i,j=0,k=0;
     for(i=0;i<fd_count;i++) {
         struct det_fd_node *temp;
@@ -85,6 +88,18 @@ int Dialog_fd_display::create_dg_edges(char det_edge[][30],char dep_edge[][30]) 
             temp=temp->next;
         }
         det_edge[j][strlen(det_edge[j])-1]='\0';
+
+        //store reflexive edges
+        char * tmp=(char *)det_edge[j];
+        do {
+            int l=strcspn(tmp,tok);
+            sprintf(poi_sub_reflex_edge,"%.*s",l,tmp);
+            if(strcmp(det_edge[j],sub_reflex_edge)!=0) {
+                strcpy(reflex_det_edge[(*n)++],det_edge[j]);
+                strcpy(reflex_dep_edge[*n-1],sub_reflex_edge);
+                tmp+=l+1;
+            }
+        }while(tmp[-1]);
 
         struct dep_fd_node *temp2;
         temp2=dep_head[i];
@@ -104,11 +119,13 @@ int Dialog_fd_display::create_dg_edges(char det_edge[][30],char dep_edge[][30]) 
     return k;
 }
 
-void Dialog_fd_display::writeFile(char det_edge[][30],char dep_edge[][30],int n) {
+void Dialog_fd_display::writeFile(char det_edge[][30],char dep_edge[][30],char reflex_det_edge[][30],char reflex_dep_edge[][30],int m,int n) {
     FILE *dg_file=fopen("dg_edges", "w");
     int results,i;
+
+    //write dependency edgeset
     putc('[',dg_file);
-    for(i=0;i<n;i++) {
+    for(i=0;i<m;i++) {
         putc('(',dg_file);
         putc('\'',dg_file);
         results=fputs(det_edge[i],dg_file);
@@ -121,19 +138,35 @@ void Dialog_fd_display::writeFile(char det_edge[][30],char dep_edge[][30],int n)
         putc(',',dg_file);
     }
     putc(']',dg_file);
+    putc('\n',dg_file);
+    //write reflexivity rule dependencies
+    putc('[',dg_file);
+    for(i=0;i<n;i++) {
+        putc('(',dg_file);
+        putc('\'',dg_file);
+        results=fputs(reflex_det_edge[i],dg_file);
+        putc('\'',dg_file);
+        putc(',',dg_file);
+        putc('\'',dg_file);
+        results=fputs(reflex_dep_edge[i],dg_file);
+        putc('\'',dg_file);
+        putc(')',dg_file);
+        putc(',',dg_file);
+    }
+    putc(']',dg_file);
     fclose(dg_file);
 }
 
 void Dialog_fd_display::on_graph_Button_clicked()
 {
-    char det_edge[30][30],dep_edge[30][30];
-    int size;
+    char det_edge[30][30],dep_edge[30][30],reflex_det_edge[30][30],reflex_dep_edge[30][30];
+    int edge_count,reflex_edge_count=0;
 
-    size=create_dg_edges(det_edge,dep_edge);
-    writeFile(det_edge,dep_edge,size);
+    edge_count=create_dg_edges(det_edge,dep_edge,reflex_det_edge,reflex_dep_edge,&reflex_edge_count);
+    writeFile(det_edge,dep_edge,reflex_det_edge,reflex_dep_edge,edge_count,reflex_edge_count);
 
     QProcess process;
     process.setProgram("graphPY.py");
-    process.start("python /home/shanid/QtWorkSpace/ADN/graphPY.py");
+    process.start("python ../ADN/graphPY.py");
     process.waitForFinished(-1);
 }

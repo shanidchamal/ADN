@@ -21,8 +21,8 @@ private:
 private slots:
     char* print_det_fd(int);
     char* print_dep_fd(int);
-    int create_dg_edges(char[][30],char[][30]);
-    void writeFile(char[][30],char[][30],int);
+    int create_dg_edges(char[][30],char[][30],char[][30],char[][30],int *);
+    void writeFile(char[][30],char[][30],char[][30],char[][30],int,int);
     void on_graph_Button_clicked();
 };
 
