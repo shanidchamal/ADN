@@ -42,7 +42,7 @@ Dialog_fd_display::~Dialog_fd_display()
 }
 
 char* Dialog_fd_display::print_det_fd(int count) {
-    static char fds[30]="";
+    static char fds[50]="";
     memset(fds,0,sizeof(fds));
     struct det_fd_node *temp;
     temp=det_head[count];
@@ -58,7 +58,7 @@ char* Dialog_fd_display::print_det_fd(int count) {
 }
 
 char* Dialog_fd_display::print_dep_fd(int count) {
-    static char fds[30]="";
+    static char fds[100]="";
     memset(fds,0,sizeof(fds));
     struct dep_fd_node *temp;
     temp=dep_head[count];
@@ -74,10 +74,10 @@ char* Dialog_fd_display::print_dep_fd(int count) {
 }
 
 int Dialog_fd_display::create_dg_edges(char det_edge[][30],char dep_edge[][30],char reflex_det_edge[][30],char reflex_dep_edge[][30],int *n) {
-    char sub_reflex_edge[30];
+    char sub_reflex_edge[30],sub_det_fd[10][30];
     char tok[]=",";
     char * poi_sub_reflex_edge=(char *)sub_reflex_edge;
-    int i,j=0,k=0;
+    int i,j=0,k=0,sub_det_fd_count=0,sub_det_fd_count2=0;
     for(i=0;i<fd_count;i++) {
         struct det_fd_node *temp;
         temp=det_head[i];
@@ -94,12 +94,54 @@ int Dialog_fd_display::create_dg_edges(char det_edge[][30],char dep_edge[][30],c
         do {
             int l=strcspn(tmp,tok);
             sprintf(poi_sub_reflex_edge,"%.*s",l,tmp);
+            //store each sub determinant fd for reflexivity rule calculations
+            strcpy(sub_det_fd[sub_det_fd_count++],sub_reflex_edge);
             if(strcmp(det_edge[j],sub_reflex_edge)!=0) {
                 strcpy(reflex_det_edge[(*n)++],det_edge[j]);
                 strcpy(reflex_dep_edge[*n-1],sub_reflex_edge);
                 tmp+=l+1;
             }
         }while(tmp[-1]);
+
+        //check for multi level reflexivity rule dependencies
+        if(sub_det_fd_count>2) {
+            unsigned int pow_set_size=pow(2,sub_det_fd_count);
+            int pow_counter,a,b,flag=0;
+            char sub_pow_set[30];
+
+            //Run from 000..0 to 111..1(finding power set)
+            for(pow_counter=0;pow_counter<pow_set_size;pow_counter++) {
+                memset(sub_pow_set,0,sizeof(sub_pow_set));
+                sub_det_fd_count2=0;
+                for(a=0;a<sub_det_fd_count;a++) {
+                    //check if bth bit in the pow_counter is set
+                    //if set then print bth fd from sub_det_fd[]
+                    if(pow_counter & (1<<a)) {
+                        strcat(sub_pow_set,sub_det_fd[a]);
+                        strcat(sub_pow_set,",");
+                        sub_det_fd_count2++;
+                    }
+                }
+                sub_pow_set[strlen(sub_pow_set)-1]='\0';
+
+                //eliminate single element fd in sub_pow_set
+                if(sub_det_fd_count2>1 && strcmp(det_edge[j],sub_pow_set)!=0) {
+                    for(b=0;b<fd_count;b++) {
+                        if(strcmp(det_k[b],sub_pow_set)==0) {
+                            flag=1;
+                            break;
+                        }
+                    }
+                    //sub reflexive edge present which is a determinant key
+                    if(flag==1) {
+                        strcpy(reflex_det_edge[(*n)++],det_edge[j]);
+                        strcpy(reflex_dep_edge[*n-1],sub_pow_set);
+                    }
+                    flag=0;
+                }
+            }
+        }
+        sub_det_fd_count=0;
 
         struct dep_fd_node *temp2;
         temp2=dep_head[i];
