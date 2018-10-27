@@ -72,4 +72,11 @@ void Dialog_DG_view::on_dgButton_clicked()
                 }
             }
         }
+        //print to tableDG
+        for(i=0;i<fd_count;i++) {
+            for(j=0;j<fd_count;j++) {
+                ui->tableDG->setItem(i,j,new QTableWidgetItem(QString::number(DG[i][j])));
+                ui->tableDG->item(i,j)->setTextAlignment(Qt::AlignCenter);
+            }
+        }
 }
