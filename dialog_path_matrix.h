@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::Dialog_path_matrix *ui;
+
+public slots:
+    void generate_total_k(char [][20], int *);
+    void generate_ADJ(char [][20], char[][20], int);
 };
 
 #endif // DIALOG_PATH_MATRIX_H

@@ -6,7 +6,7 @@
 
 #include <dialog_dm_view.h>
 
-extern char det_edge[30][30],dep_edge[30][30];
+extern char det_edge[30][30],dep_edge[30][30],reflex_det_edge[30][30],reflex_dep_edge[30][30];
 extern int edge_count,reflex_edge_count;
 
 namespace Ui {
