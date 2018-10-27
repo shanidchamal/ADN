@@ -42,9 +42,9 @@
   <widget class="QTableWidget" name="tableADJ">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>80</x>
      <y>90</y>
-     <width>471</width>
+     <width>581</width>
      <height>231</height>
     </rect>
    </property>
@@ -65,9 +65,9 @@
   <widget class="QTableWidget" name="tablePATH">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>80</x>
      <y>380</y>
-     <width>471</width>
+     <width>581</width>
      <height>241</height>
     </rect>
    </property>

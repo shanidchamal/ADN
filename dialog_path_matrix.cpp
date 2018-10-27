@@ -3,7 +3,7 @@
 
 #include "dialog_fd_input.h"
 
-int PATH[20][20],total_k_count=sim_k_count;
+int PATH[20][20],total_k_count;
 
 Dialog_path_matrix::Dialog_path_matrix(QWidget *parent) :
     QDialog(parent),
@@ -13,9 +13,10 @@ Dialog_path_matrix::Dialog_path_matrix(QWidget *parent) :
     //generate total_k[][] (total key set or nodes in graph)
     char total_k[20][20],ADJ[20][20];
     int i,j;
+    total_k_count=sim_k_count;
 
-    generate_total_k(total_k,&total_k_count);
-    generate_ADJ(ADJ,total_k,total_k_count);
+    generate_total_k(total_k);
+    generate_ADJ(ADJ,total_k);
     //Display final ADJ
         QStringList total_k_titles;
 
@@ -65,7 +66,7 @@ Dialog_path_matrix::~Dialog_path_matrix()
     delete ui;
 }
 
-void Dialog_path_matrix::generate_total_k(char total_k[][20], int *n) {
+void Dialog_path_matrix::generate_total_k(char total_k[][20]) {
     int i,j,flag;
 
     for(i=0;i<sim_k_count;i++)
@@ -81,11 +82,11 @@ void Dialog_path_matrix::generate_total_k(char total_k[][20], int *n) {
             }
         }
         if(flag==0)
-            strcpy(total_k[(*n)++],det_k[i]);
+            strcpy(total_k[total_k_count++],det_k[i]);
     }
 }
 
-void Dialog_path_matrix::generate_ADJ(char ADJ[][20],char total_k[][20],int total_k_count) {
+void Dialog_path_matrix::generate_ADJ(char ADJ[][20],char total_k[][20]) {
     int i,j,det_index=-1,dep_index=-1;
 
     //initialize ADJ to 0
@@ -132,5 +133,12 @@ void Dialog_path_matrix::on_pathButton_clicked()
         for(i=0;i<total_k_count;i++)
             for(j=0;j<total_k_count;j++)
                 PATH[i][j]=(PATH[i][j] || (PATH[i][k] && PATH[k][j]));
+    }
+    //print PATH to tablePATH
+    for(i=0;i<total_k_count;i++) {
+        for(j=0;j<total_k_count;j++) {
+            ui->tablePATH->setItem(i,j,new QTableWidgetItem(QString::number(PATH[i][j])));
+            ui->tablePATH->item(i,j)->setTextAlignment(Qt::AlignCenter);
+        }
     }
 }
