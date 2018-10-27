@@ -26,7 +26,7 @@
     <string>Dependency Matrix</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QTableWidget" name="tableDM">
    <property name="geometry">
     <rect>
      <x>110</x>

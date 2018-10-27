@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+extern char DM[20][20][30];
+
 namespace Ui {
 class Dialog_DM_view;
 }
@@ -14,6 +16,9 @@ class Dialog_DM_view : public QDialog
 public:
     explicit Dialog_DM_view(QWidget *parent = nullptr);
     ~Dialog_DM_view();
+
+private slots:
+    void on_dmButton_clicked();
 
 private:
     Ui::Dialog_DM_view *ui;

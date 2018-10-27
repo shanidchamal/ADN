@@ -4,6 +4,9 @@
 
 #include <QProcess>
 
+char det_edge[30][30],dep_edge[30][30];
+int edge_count,reflex_edge_count=0,dg_generated_flag=0;
+
 Dialog_fd_display::Dialog_fd_display(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_fd_display)
@@ -201,11 +204,13 @@ void Dialog_fd_display::writeFile(char det_edge[][30],char dep_edge[][30],char r
 
 void Dialog_fd_display::on_graph_Button_clicked()
 {
-    char det_edge[30][30],dep_edge[30][30],reflex_det_edge[30][30],reflex_dep_edge[30][30];
-    int edge_count,reflex_edge_count=0;
+    char reflex_det_edge[30][30],reflex_dep_edge[30][30];
 
-    edge_count=create_dg_edges(det_edge,dep_edge,reflex_det_edge,reflex_dep_edge,&reflex_edge_count);
-    writeFile(det_edge,dep_edge,reflex_det_edge,reflex_dep_edge,edge_count,reflex_edge_count);
+    if(dg_generated_flag==0){
+        edge_count=create_dg_edges(det_edge,dep_edge,reflex_det_edge,reflex_dep_edge,&reflex_edge_count);
+        writeFile(det_edge,dep_edge,reflex_det_edge,reflex_dep_edge,edge_count,reflex_edge_count);
+        dg_generated_flag=1;
+    }
 
     QProcess process;
     process.setProgram("graphPY.py");
@@ -215,6 +220,13 @@ void Dialog_fd_display::on_graph_Button_clicked()
 
 void Dialog_fd_display::on_nextButton_clicked()
 {
+    char reflex_det_edge[30][30],reflex_dep_edge[30][30];
+
+    if(dg_generated_flag==0) {
+        edge_count=create_dg_edges(det_edge,dep_edge,reflex_det_edge,reflex_dep_edge,&reflex_edge_count);
+        writeFile(det_edge,dep_edge,reflex_det_edge,reflex_dep_edge,edge_count,reflex_edge_count);
+        dg_generated_flag=1;
+    }
     hide();
     dialog_dm_view=new Dialog_DM_view(this);
     dialog_dm_view->show();
