@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>744</width>
-    <height>763</height>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,34 +26,11 @@
     <string>Path Matrix Generation</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
-     <y>50</y>
-     <width>111</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Adjacency Matrix</string>
-   </property>
-  </widget>
-  <widget class="QTableWidget" name="tableADJ">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>90</y>
-     <width>581</width>
-     <height>231</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
      <x>330</x>
-     <y>350</y>
+     <y>70</y>
      <width>81</width>
      <height>18</height>
     </rect>
@@ -65,18 +42,18 @@
   <widget class="QTableWidget" name="tablePATH">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>380</y>
-     <width>581</width>
-     <height>241</height>
+     <x>70</x>
+     <y>100</y>
+     <width>611</width>
+     <height>331</height>
     </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="pathButton">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>630</y>
+     <x>300</x>
+     <y>460</y>
      <width>141</width>
      <height>34</height>
     </rect>
@@ -88,8 +65,8 @@
   <widget class="QPushButton" name="nextButton">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>670</y>
+     <x>330</x>
+     <y>510</y>
      <width>88</width>
      <height>34</height>
     </rect>

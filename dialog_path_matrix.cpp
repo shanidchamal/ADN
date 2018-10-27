@@ -18,29 +18,12 @@ Dialog_path_matrix::Dialog_path_matrix(QWidget *parent) :
 
     generate_total_k();
     generate_ADJ(ADJ);
-    //Display final ADJ
+    //Display initial PATH
         QStringList total_k_titles;
 
         for(i=0;i<total_k_count;i++)
             total_k_titles << total_k[i];
 
-        ui->tableADJ->setColumnCount(total_k_count);
-        ui->tableADJ->setRowCount(total_k_count);
-        ui->tableADJ->setHorizontalHeaderLabels(total_k_titles);
-        ui->tableADJ->setVerticalHeaderLabels(total_k_titles);
-        ui->tableADJ->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-        for(i=0;i<total_k_count;i++) {
-            for(j=0;j<total_k_count;j++) {
-                ui->tableADJ->setItem(i,j,new QTableWidgetItem(QString::number(ADJ[i][j])));
-                ui->tableADJ->item(i,j)->setTextAlignment(Qt::AlignCenter);
-            }
-        }
-
-        ui->tableADJ->resizeColumnsToContents();
-        ui->tableADJ->resizeRowsToContents();
-
-        //Display initial PATH
         for(i=0;i<total_k_count;i++)
             for(j=0;j<total_k_count;j++)
                 PATH[i][j]=ADJ[i][j];
