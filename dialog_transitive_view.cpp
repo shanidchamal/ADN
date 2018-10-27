@@ -84,4 +84,11 @@ void Dialog_transitive_view::on_detPathButton_clicked()
             }
         }
     }
+    //print PATH to tableDetPath
+    for(i=0;i<fd_count;i++) {
+        for(j=0;j<fd_count;j++) {
+            ui->tableDetPath->setItem(i,j,new QTableWidgetItem(QString::number(det_PATH[i][j])));
+            ui->tableDetPath->item(i,j)->setTextAlignment(Qt::AlignCenter);
+        }
+    }
 }
