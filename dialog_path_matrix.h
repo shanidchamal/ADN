@@ -21,6 +21,8 @@ private:
 public slots:
     void generate_total_k(char [][20], int *);
     void generate_ADJ(char [][20], char[][20], int);
+private slots:
+    void on_pathButton_clicked();
 };
 
 #endif // DIALOG_PATH_MATRIX_H

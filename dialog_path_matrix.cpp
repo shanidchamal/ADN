@@ -3,14 +3,16 @@
 
 #include "dialog_fd_input.h"
 
+int PATH[20][20],total_k_count=sim_k_count;
+
 Dialog_path_matrix::Dialog_path_matrix(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_path_matrix)
 {
     ui->setupUi(this);
     //generate total_k[][] (total key set or nodes in graph)
-    char total_k[20][20],ADJ[20][20],PATH[20][20];
-    int i,j,total_k_count=sim_k_count;
+    char total_k[20][20],ADJ[20][20];
+    int i,j;
 
     generate_total_k(total_k,&total_k_count);
     generate_ADJ(ADJ,total_k,total_k_count);
@@ -119,5 +121,16 @@ void Dialog_path_matrix::generate_ADJ(char ADJ[][20],char total_k[][20],int tota
         ADJ[det_index][dep_index]=1;
         det_index=-1;
         dep_index=-1;
+    }
+}
+
+void Dialog_path_matrix::on_pathButton_clicked()
+{
+    int i,j,k;
+    //Warshall's algorithm to find path matrix
+    for(k=0;k<total_k_count;k++) {
+        for(i=0;i<total_k_count;i++)
+            for(j=0;j<total_k_count;j++)
+                PATH[i][j]=(PATH[i][j] || (PATH[i][k] && PATH[k][j]));
     }
 }
