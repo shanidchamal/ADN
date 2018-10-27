@@ -9,7 +9,7 @@ Dialog_path_matrix::Dialog_path_matrix(QWidget *parent) :
 {
     ui->setupUi(this);
     //generate total_k[][] (total key set or nodes in graph)
-    char total_k[20][20],ADJ[20][20];
+    char total_k[20][20],ADJ[20][20],PATH[20][20];
     int i,j,total_k_count=sim_k_count;
 
     generate_total_k(total_k,&total_k_count);
@@ -35,6 +35,27 @@ Dialog_path_matrix::Dialog_path_matrix(QWidget *parent) :
 
         ui->tableADJ->resizeColumnsToContents();
         ui->tableADJ->resizeRowsToContents();
+
+        //Display initial PATH
+        for(i=0;i<total_k_count;i++)
+            for(j=0;j<total_k_count;j++)
+                PATH[i][j]=ADJ[i][j];
+
+        ui->tablePATH->setColumnCount(total_k_count);
+        ui->tablePATH->setRowCount(total_k_count);
+        ui->tablePATH->setHorizontalHeaderLabels(total_k_titles);
+        ui->tablePATH->setVerticalHeaderLabels(total_k_titles);
+        ui->tablePATH->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+        for(i=0;i<total_k_count;i++) {
+            for(j=0;j<total_k_count;j++) {
+                ui->tablePATH->setItem(i,j,new QTableWidgetItem(QString::number(PATH[i][j])));
+                ui->tablePATH->item(i,j)->setTextAlignment(Qt::AlignCenter);
+                }
+            }
+
+        ui->tablePATH->resizeColumnsToContents();
+        ui->tablePATH->resizeRowsToContents();
 }
 
 Dialog_path_matrix::~Dialog_path_matrix()
