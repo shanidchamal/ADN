@@ -4,6 +4,7 @@
 #include "dialog_fd_input.h"
 
 char DM[20][20][30];
+int dm_flag=0;
 
 Dialog_DM_view::Dialog_DM_view(QWidget *parent) :
     QDialog(parent),
@@ -89,4 +90,14 @@ void Dialog_DM_view::on_dmButton_clicked()
                 ui->tableDM->item(i,j)->setTextAlignment(Qt::AlignCenter);
             }
         }
+        dm_flag=1;
+}
+
+void Dialog_DM_view::on_nextButton_clicked()
+{
+    if(dm_flag==1) {
+        hide();
+        dialog_dg_view=new Dialog_DG_view(this);
+        dialog_dg_view->show();
+    }
 }
