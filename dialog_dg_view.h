@@ -15,6 +15,9 @@ public:
     explicit Dialog_DG_view(QWidget *parent = nullptr);
     ~Dialog_DG_view();
 
+private slots:
+    void on_dgButton_clicked();
+
 private:
     Ui::Dialog_DG_view *ui;
 };
