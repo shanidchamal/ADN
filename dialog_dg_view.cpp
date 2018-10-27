@@ -4,6 +4,8 @@
 #include "dialog_fd_input.h"
 #include "dialog_dm_view.h"
 
+int dg_flag=0;
+
 Dialog_DG_view::Dialog_DG_view(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_DG_view)
@@ -79,4 +81,14 @@ void Dialog_DG_view::on_dgButton_clicked()
                 ui->tableDG->item(i,j)->setTextAlignment(Qt::AlignCenter);
             }
         }
+        dg_flag=1;
+}
+
+void Dialog_DG_view::on_nextButton_clicked()
+{
+    if(dg_flag==1) {
+        hide();
+        dialog_path_matrix=new Dialog_path_matrix(this);
+        dialog_path_matrix->show();
+    }
 }
