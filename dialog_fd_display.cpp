@@ -212,3 +212,10 @@ void Dialog_fd_display::on_graph_Button_clicked()
     process.start("python ../ADN/graphPY.py");
     process.waitForFinished(-1);
 }
+
+void Dialog_fd_display::on_nextButton_clicked()
+{
+    hide();
+    dialog_dm_view=new Dialog_DM_view(this);
+    dialog_dm_view->show();
+}

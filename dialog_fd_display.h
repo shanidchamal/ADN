@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <math.h>
 
+#include <dialog_dm_view.h>
+
 namespace Ui {
 class Dialog_fd_display;
 }
@@ -18,6 +20,7 @@ public:
 
 private:
     Ui::Dialog_fd_display *ui;
+    Dialog_DM_view *dialog_dm_view;
 
 private slots:
     char* print_det_fd(int);
@@ -25,6 +28,7 @@ private slots:
     int create_dg_edges(char[][30],char[][30],char[][30],char[][30],int *);
     void writeFile(char[][30],char[][30],char[][30],char[][30],int,int);
     void on_graph_Button_clicked();
+    void on_nextButton_clicked();
 };
 
 #endif // DIALOG_FD_DISPLAY_H

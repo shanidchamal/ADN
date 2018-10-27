@@ -26,17 +26,20 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     dialog_fd_input.cpp \
-    dialog_fd_display.cpp
+    dialog_fd_display.cpp \
+    dialog_dm_view.cpp
 
 HEADERS += \
         mainwindow.h \
     dialog_fd_input.h \
-    dialog_fd_display.h
+    dialog_fd_display.h \
+    dialog_dm_view.h
 
 FORMS += \
         mainwindow.ui \
     dialog_fd_input.ui \
     dialog_fd_display.ui \
+    dialog_dm_view.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
