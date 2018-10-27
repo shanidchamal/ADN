@@ -82,4 +82,11 @@ void Dialog_DM_view::on_dmButton_clicked()
                 }
             }
         }
+        //print to tableDM
+        for(i=0;i<fd_count;i++) {
+            for(j=0;j<sim_k_count;j++) {
+                ui->tableDM->setItem(i,j,new QTableWidgetItem(DM[i][j]));
+                ui->tableDM->item(i,j)->setTextAlignment(Qt::AlignCenter);
+            }
+        }
 }
