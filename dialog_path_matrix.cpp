@@ -3,6 +3,7 @@
 
 #include "dialog_fd_input.h"
 
+char total_k[20][30];
 int PATH[20][20],total_k_count,path_flag=0;
 
 Dialog_path_matrix::Dialog_path_matrix(QWidget *parent) :
@@ -11,12 +12,12 @@ Dialog_path_matrix::Dialog_path_matrix(QWidget *parent) :
 {
     ui->setupUi(this);
     //generate total_k[][] (total key set or nodes in graph)
-    char total_k[20][20],ADJ[20][20];
+    char ADJ[20][20];
     int i,j;
     total_k_count=sim_k_count;
 
-    generate_total_k(total_k);
-    generate_ADJ(ADJ,total_k);
+    generate_total_k();
+    generate_ADJ(ADJ);
     //Display final ADJ
         QStringList total_k_titles;
 
@@ -66,7 +67,7 @@ Dialog_path_matrix::~Dialog_path_matrix()
     delete ui;
 }
 
-void Dialog_path_matrix::generate_total_k(char total_k[][20]) {
+void Dialog_path_matrix::generate_total_k() {
     int i,j,flag;
 
     for(i=0;i<sim_k_count;i++)
@@ -86,7 +87,7 @@ void Dialog_path_matrix::generate_total_k(char total_k[][20]) {
     }
 }
 
-void Dialog_path_matrix::generate_ADJ(char ADJ[][20],char total_k[][20]) {
+void Dialog_path_matrix::generate_ADJ(char ADJ[][20]) {
     int i,j,det_index=-1,dep_index=-1;
 
     //initialize ADJ to 0

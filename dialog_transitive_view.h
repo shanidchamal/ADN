@@ -15,6 +15,9 @@ public:
     explicit Dialog_transitive_view(QWidget *parent = nullptr);
     ~Dialog_transitive_view();
 
+private slots:
+    void on_detPathButton_clicked();
+
 private:
     Ui::Dialog_transitive_view *ui;
 };
