@@ -3,7 +3,7 @@
 
 #include "dialog_fd_input.h"
 
-int PATH[20][20],total_k_count;
+int PATH[20][20],total_k_count,path_flag=0;
 
 Dialog_path_matrix::Dialog_path_matrix(QWidget *parent) :
     QDialog(parent),
@@ -140,5 +140,15 @@ void Dialog_path_matrix::on_pathButton_clicked()
             ui->tablePATH->setItem(i,j,new QTableWidgetItem(QString::number(PATH[i][j])));
             ui->tablePATH->item(i,j)->setTextAlignment(Qt::AlignCenter);
         }
+    }
+    path_flag=1;
+}
+
+void Dialog_path_matrix::on_nextButton_clicked()
+{
+    if(path_flag==1) {
+        hide();
+        dialog_transitive_view=new Dialog_transitive_view(this);
+        dialog_transitive_view->show();
     }
 }

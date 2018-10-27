@@ -29,7 +29,8 @@ SOURCES += \
     dialog_fd_display.cpp \
     dialog_dm_view.cpp \
     dialog_dg_view.cpp \
-    dialog_path_matrix.cpp
+    dialog_path_matrix.cpp \
+    dialog_transitive_view.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -37,7 +38,8 @@ HEADERS += \
     dialog_fd_display.h \
     dialog_dm_view.h \
     dialog_dg_view.h \
-    dialog_path_matrix.h
+    dialog_path_matrix.h \
+    dialog_transitive_view.h
 
 FORMS += \
         mainwindow.ui \
@@ -45,7 +47,8 @@ FORMS += \
     dialog_fd_display.ui \
     dialog_dm_view.ui \
     dialog_dg_view.ui \
-    dialog_path_matrix.ui
+    dialog_path_matrix.ui \
+    dialog_transitive_view.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
