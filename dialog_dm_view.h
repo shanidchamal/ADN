@@ -19,6 +19,7 @@ public:
     ~Dialog_DM_view();
 
 private slots:
+    void sort();
     void on_dmButton_clicked();
     void on_nextButton_clicked();
 

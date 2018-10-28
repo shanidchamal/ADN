@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Automatic Database Normaliser</string>
+     <string>Automatic Database Normalizer</string>
     </property>
    </widget>
    <widget class="QPushButton" name="homeButton">

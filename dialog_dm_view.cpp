@@ -11,6 +11,8 @@ Dialog_DM_view::Dialog_DM_view(QWidget *parent) :
     ui(new Ui::Dialog_DM_view)
 {
     ui->setupUi(this);
+    //sort simple keys in lexicographic order
+    sort();
     //Display initial DM
         int i,j;
         QStringList det_k_titles,sim_k_titles;
@@ -40,6 +42,22 @@ Dialog_DM_view::Dialog_DM_view(QWidget *parent) :
 Dialog_DM_view::~Dialog_DM_view()
 {
     delete ui;
+}
+
+void Dialog_DM_view::sort()
+{
+    char temp[30];
+    int i,j;
+
+    for(i=0;i<sim_k_count-1;i++) {
+        for(j=i+1;j<sim_k_count;j++) {
+            if(strcmp(sim_k[i],sim_k[j])>0) {
+                strcpy(temp,sim_k[i]);
+                strcpy(sim_k[i],sim_k[j]);
+                strcpy(sim_k[j],temp);
+            }
+        }
+    }
 }
 
 void Dialog_DM_view::on_dmButton_clicked()
