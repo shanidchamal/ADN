@@ -4,6 +4,8 @@
 #include "dialog_fd_input.h"
 #include "dialog_path_matrix.h"
 
+int transitve_flag=0;
+
 Dialog_transitive_view::Dialog_transitive_view(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_transitive_view)
@@ -90,5 +92,15 @@ void Dialog_transitive_view::on_detPathButton_clicked()
             ui->tableDetPath->setItem(i,j,new QTableWidgetItem(QString::number(det_PATH[i][j])));
             ui->tableDetPath->item(i,j)->setTextAlignment(Qt::AlignCenter);
         }
+    }
+    transitve_flag=1;
+}
+
+void Dialog_transitive_view::on_nextButton_clicked()
+{
+    if(transitve_flag==1) {
+        hide();
+        dialog_closure_view=new Dialog_closure_view(this);
+        dialog_closure_view->show();
     }
 }

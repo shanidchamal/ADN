@@ -2,6 +2,7 @@
 #define DIALOG_TRANSITIVE_VIEW_H
 
 #include <QDialog>
+#include <dialog_closure_view.h>
 
 namespace Ui {
 class Dialog_transitive_view;
@@ -18,8 +19,11 @@ public:
 private slots:
     void on_detPathButton_clicked();
 
+    void on_nextButton_clicked();
+
 private:
     Ui::Dialog_transitive_view *ui;
+    Dialog_closure_view *dialog_closure_view;
 };
 
 #endif // DIALOG_TRANSITIVE_VIEW_H
