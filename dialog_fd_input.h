@@ -46,6 +46,9 @@ private slots:
     void create_det_FD(int , char*);
     void create_dep_FD(int, char*);
     void on_push_fd_Button_clicked();
+    void on_ex1Button_clicked();
+    void on_ex2Button_clicked();
+    void on_cRentalButton_clicked();
 };
 
 #endif // DIALOG_FD_INPUT_H

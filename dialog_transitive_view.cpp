@@ -4,6 +4,7 @@
 #include "dialog_fd_input.h"
 #include "dialog_path_matrix.h"
 
+char det_PATH[20][20];
 int transitve_flag=0;
 
 Dialog_transitive_view::Dialog_transitive_view(QWidget *parent) :
@@ -43,7 +44,7 @@ Dialog_transitive_view::~Dialog_transitive_view()
 void Dialog_transitive_view::on_detPathButton_clicked()
 {
     //generate det_PATH(determinant key transitive dependencies
-    char det_PATH[20][20],sub_fd[30],tok[]=",";
+    char sub_fd[30],tok[]=",";
     char * poi_sub_fd=(char *)sub_fd;
     int i,j,k,no_path_flag,det_index=-1,dep_index=-1;
 

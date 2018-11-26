@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <dialog_closure_view.h>
 
+extern char det_PATH[20][20];
+
 namespace Ui {
 class Dialog_transitive_view;
 }
@@ -18,7 +20,6 @@ public:
 
 private slots:
     void on_detPathButton_clicked();
-
     void on_nextButton_clicked();
 
 private:

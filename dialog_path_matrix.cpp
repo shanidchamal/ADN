@@ -5,6 +5,7 @@
 
 char total_k[20][30];
 int PATH[20][20],total_k_count,path_flag=0;
+Dialog_transitive_view *dialog_transitive_view;
 
 Dialog_path_matrix::Dialog_path_matrix(QWidget *parent) :
     QDialog(parent),

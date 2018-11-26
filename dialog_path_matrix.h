@@ -6,6 +6,7 @@
 
 extern char total_k[20][30];
 extern int PATH[20][20],total_k_count;
+extern Dialog_transitive_view *dialog_transitive_view;
 
 namespace Ui {
 class Dialog_path_matrix;
@@ -21,7 +22,6 @@ public:
 
 private:
     Ui::Dialog_path_matrix *ui;
-    Dialog_transitive_view *dialog_transitive_view;
 
 public slots:
     void generate_total_k();

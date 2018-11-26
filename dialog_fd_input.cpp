@@ -176,3 +176,96 @@ void Dialog_fd_input::on_push_fd_Button_clicked()
         dialog_fd_display->show();
     }
 }
+
+void Dialog_fd_input::on_ex1Button_clicked()
+{
+    create_det_FD(fd_count,"A");
+    create_dep_FD(fd_count,"B,C");
+    fd_count++;
+
+    create_det_FD(fd_count,"E");
+    create_dep_FD(fd_count,"A,D");
+    fd_count++;
+
+    create_det_FD(fd_count,"G");
+    create_dep_FD(fd_count,"A,E,J,K");
+    fd_count++;
+
+    create_det_FD(fd_count,"G,H");
+    create_dep_FD(fd_count,"F,I");
+    fd_count++;
+
+    create_det_FD(fd_count,"K");
+    create_dep_FD(fd_count,"A,L");
+    fd_count++;
+
+    create_det_FD(fd_count,"J");
+    create_dep_FD(fd_count,"K");
+    fd_count++;
+
+    hide();
+    dialog_fd_display = new Dialog_fd_display(this);
+    dialog_fd_display->show();
+}
+
+void Dialog_fd_input::on_ex2Button_clicked()
+{
+    create_det_FD(fd_count,"A,B");
+    create_dep_FD(fd_count,"C,E,F,G,H");
+    fd_count++;
+
+    create_det_FD(fd_count,"A");
+    create_dep_FD(fd_count,"D");
+    fd_count++;
+
+    create_det_FD(fd_count,"F");
+    create_dep_FD(fd_count,"G");
+    fd_count++;
+
+    create_det_FD(fd_count,"B,F");
+    create_dep_FD(fd_count,"H");
+    fd_count++;
+
+    create_det_FD(fd_count,"B,C,H");
+    create_dep_FD(fd_count,"A,D,E,F,G");
+    fd_count++;
+
+    create_det_FD(fd_count,"B,C,F");
+    create_dep_FD(fd_count,"A,D,E");
+    fd_count++;
+
+    hide();
+    dialog_fd_display = new Dialog_fd_display(this);
+    dialog_fd_display->show();
+}
+
+void Dialog_fd_input::on_cRentalButton_clicked()
+{
+    create_det_FD(fd_count,"clientNo");
+    create_dep_FD(fd_count,"cName");
+    fd_count++;
+
+    create_det_FD(fd_count,"propertyNo");
+    create_dep_FD(fd_count,"pAddress,rent,ownerNo,oName");
+    fd_count++;
+
+    create_det_FD(fd_count,"ownerNo");
+    create_dep_FD(fd_count,"oName");
+    fd_count++;
+
+    create_det_FD(fd_count,"clientNo,propertyNo");
+    create_dep_FD(fd_count,"cName,pAddress,rentStart,rentFinish,rent,ownerNo,oName");
+    fd_count++;
+
+    create_det_FD(fd_count,"clientNo,rentStart");
+    create_dep_FD(fd_count,"cName,propertyNo,pAddress,rentFinish,rent,ownerNo,oName");
+    fd_count++;
+
+    create_det_FD(fd_count,"propertyNo,rentStart");
+    create_dep_FD(fd_count,"clientNo,cName,pAddress,rentFinish,rent,ownerNo,oName");
+    fd_count++;
+
+    hide();
+    dialog_fd_display = new Dialog_fd_display(this);
+    dialog_fd_display->show();
+}
