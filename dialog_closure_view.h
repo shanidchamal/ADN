@@ -2,6 +2,9 @@
 #define DIALOG_CLOSURE_VIEW_H
 
 #include <QDialog>
+#include <dialog2nf.h>
+
+extern int transformer[15],t_count;
 
 namespace Ui {
 class Dialog_closure_view;
@@ -17,18 +20,24 @@ public:
 
 public slots:
     void dependency_closure();
-    void dependency_closure2(char[][30],int);
+    void dependency_closure2(char[][30],int,int);
     void circular_dependency();
-    int FindOne(int,int,int,int);
+    int FindOne(int,int,int);
     int candidate_keys(char[][30],int[]);
     int findKeyRank(char[][30],int[],int);
     int primary_key(char[][30],int[],int,int[],int);
+    int findPartial(int,int *);
+    int findSim_k_Index(char[]);
+    void maskAttr();
 
 private slots:
     void on_backButton_clicked();
 
+    void on_nextButton_clicked();
+
 private:
     Ui::Dialog_closure_view *ui;
+    Dialog2NF *dialog_2nf;
 };
 
 #endif // DIALOG_CLOSURE_VIEW_H
