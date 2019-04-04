@@ -6,8 +6,8 @@
 #include "dialog_transitive_view.h"
 
 
-char DM2[20][20][30];
-int transformer[15],t_count,sim_k_blacklist[30],bl_count;
+char DM2[20][20][30],pk[30];
+int NF_array[15],NF_count,sim_k_blacklist[30],bl_count;
 
 Dialog_closure_view::Dialog_closure_view(QWidget *parent) :
     QDialog(parent),
@@ -15,10 +15,10 @@ Dialog_closure_view::Dialog_closure_view(QWidget *parent) :
 {
     ui->setupUi(this);
     int i,j,can_k_index[10],can_k_rank[10],top_rank,pk_rank,pk_index,returnval,stepcount=0;
-    char can_k[10][30],pk[30];
-    int can_k_count=0;t_count=0;bl_count=0;
+    char can_k[10][30];
+    int can_k_count=0;NF_count=0;bl_count=0;
 
-    memset(transformer,-1,sizeof(transformer));
+    memset(NF_array,-1,sizeof(NF_array));
     for(i=0;i<10;i++)
         memset(can_k[i],0,sizeof(can_k[i]));
 
@@ -76,6 +76,8 @@ Dialog_closure_view::Dialog_closure_view(QWidget *parent) :
 
     ui->tableClosure->resizeColumnsToContents();
     ui->tableClosure->resizeRowsToContents();
+    ui->tableClosure->selectRow(pk_index);
+    ui->tableClosure->setSelectionMode(QAbstractItemView::NoSelection);
 
     if(can_k_count!=0) {
         ui->label_3->setText(can_k[0]);
@@ -97,7 +99,7 @@ Dialog_closure_view::Dialog_closure_view(QWidget *parent) :
         strcpy(pk,det_k[returnval]);
         returnval=findPartial(returnval,&pk_rank);
     }
-    //printf("new Pk:%s\n",pk);
+    printf("new Pk:%s\n",pk);
 }
 
 Dialog_closure_view::~Dialog_closure_view()
@@ -297,18 +299,18 @@ int Dialog_closure_view::findPartial(int pk_index,int *pk_rank)
                 }
 
                 if(flag2==0) {
-                    transformer[t_count++]=pk_index;
+                    NF_array[NF_count++]=pk_index;
                     maskAttr();
                     *pk_rank=partial_k_rank;
                     return i;
                 }
                 else {
-                    transformer[t_count++]=i;
+                    NF_array[NF_count++]=i;
                     maskAttr();
                 }
             }
             else {
-                transformer[t_count++]=i;
+                NF_array[NF_count++]=i;
                 maskAttr();
             }
         }
@@ -328,7 +330,7 @@ int Dialog_closure_view::findSim_k_Index(char sub_dm_k[])
 void Dialog_closure_view::maskAttr()
 {
     int i,partial;
-    partial=transformer[t_count-1];
+    partial=NF_array[NF_count-1];
     for(i=0;i<sim_k_count;i++) {
         if(strcmp(DM[partial][i],"1")==0 || strcmp(DM[partial][i],"2")==0) {
             /*for(k=0;k<bl_count;k++) {

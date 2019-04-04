@@ -4,7 +4,8 @@
 #include <QDialog>
 #include <dialog2nf.h>
 
-extern int transformer[15],t_count;
+extern int NF_array[15],NF_count;
+extern char pk[30];
 
 namespace Ui {
 class Dialog_closure_view;

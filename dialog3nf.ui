@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog2NF</class>
- <widget class="QDialog" name="Dialog2NF">
+ <class>Dialog3nf</class>
+ <widget class="QDialog" name="Dialog3nf">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>673</width>
-    <height>468</height>
+    <width>744</width>
+    <height>470</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,20 +36,6 @@
       <widget class="QLabel" name="label">
        <property name="text">
         <string>                                                                           Dependency Closure</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Primary Key :</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string/>
        </property>
       </widget>
      </item>
@@ -88,7 +74,7 @@
         </sizepolicy>
        </property>
        <property name="title">
-        <string>                                                                                    2NF Relations</string>
+        <string>                                                                           3NF Relations</string>
        </property>
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
@@ -100,6 +86,12 @@
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QTableWidget" name="tableWidget_2"/>
+         </item>
+         <item>
+          <widget class="QTableWidget" name="tableWidget"/>
+         </item>
          <item>
           <widget class="QTableWidget" name="table2NF1"/>
          </item>
