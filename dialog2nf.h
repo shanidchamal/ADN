@@ -4,6 +4,12 @@
 #include <QDialog>
 #include "dialog3nf.h"
 
+extern int NF2_index,bl2_index,bl_count2,NF_blacklist[30];
+
+int checkRowScope(int);
+int checkColScope(int,int);
+int checkNF3_blacklist(int);
+
 namespace Ui {
 class Dialog2NF;
 }
@@ -18,10 +24,9 @@ public:
 
 private slots:
     void on_nextButton_clicked();
-    int checkPkAttr(char[]);
-    int print2NF(int,int,int[],QStringList,QWidget *);
-    int checkRowScope(int);
-    int checkColScope(int,int,int[]);
+    void printNF2(int,QStringList,QWidget *);
+    void printClosure2NF(QWidget *);
+
 
 private:
     Ui::Dialog2NF *ui;

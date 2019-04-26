@@ -2,9 +2,9 @@
 #define DIALOG_CLOSURE_VIEW_H
 
 #include <QDialog>
-#include <dialog2nf.h>
+#include "dialog2nf.h"
 
-extern int NF_array[15],NF_count;
+extern int NF_array[15],NF_count,bl_count;
 extern char pk[30];
 
 namespace Ui {
