@@ -125,7 +125,7 @@ void Dialog3nf::printNF3(int index, QStringList uIDs, QWidget *parent) {
     obj->resizeRowsToContents();
 }
 
-int Dialog3nf::checkNF3_blacklist(int index) {
+int checkNF3_blacklist(int index) {
     int i,flag=0;
 
     for(i=0;i<bl3_count;i++)
@@ -185,4 +185,11 @@ void Dialog3nf::printClosure3NF(QWidget *parent) {
         b=0;
     }
     obj->setSelectionMode(QAbstractItemView::NoSelection);
+}
+
+void Dialog3nf::on_nextButton_clicked()
+{
+    hide();
+    dialog_bcnf=new Dialog_BCNF(this);
+    dialog_bcnf->show();
 }

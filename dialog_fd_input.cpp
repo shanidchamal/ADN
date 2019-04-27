@@ -269,3 +269,26 @@ void Dialog_fd_input::on_cRentalButton_clicked()
     dialog_fd_display = new Dialog_fd_display(this);
     dialog_fd_display->show();
 }
+
+void Dialog_fd_input::on_ext3Button_clicked()
+{
+    create_det_FD(fd_count,"clientNo,date");
+    create_dep_FD(fd_count,"Time,staffNo,roomNo");
+    fd_count++;
+
+    create_det_FD(fd_count,"staffNo,date,Time");
+    create_dep_FD(fd_count,"clientNo");
+    fd_count++;
+
+    create_det_FD(fd_count,"roomNo,date,Time");
+    create_dep_FD(fd_count,"staffNo,clientNo");
+    fd_count++;
+
+    create_det_FD(fd_count,"staffNo,date");
+    create_dep_FD(fd_count,"roomNo");
+    fd_count++;
+
+    hide();
+    dialog_fd_display = new Dialog_fd_display(this);
+    dialog_fd_display->show();
+}

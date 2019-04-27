@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog_closure_view</class>
- <widget class="QDialog" name="Dialog_closure_view">
+ <class>Dialog_BCNF</class>
+ <widget class="QDialog" name="Dialog_BCNF">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>673</width>
-    <height>499</height>
+    <height>468</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,6 +40,20 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Primary Key :</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer_3">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -56,7 +70,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QTableWidget" name="tableClosure">
+      <widget class="QTableWidget" name="tableClosureBCNF">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -73,92 +87,27 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
        <property name="title">
-        <string/>
+        <string>                                                                                    BCNF Relations</string>
        </property>
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>10</y>
-          <width>241</width>
-          <height>140</height>
+          <y>30</y>
+          <width>1306</width>
+          <height>194</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Candidate Keys</string>
-           </property>
-          </widget>
+          <widget class="QTableWidget" name="tableBCNF1"/>
          </item>
          <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
+          <widget class="QTableWidget" name="tableBCNF2"/>
          </item>
          <item>
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>350</x>
-          <y>10</y>
-          <width>231</width>
-          <height>61</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <item>
-          <widget class="QLabel" name="label_8">
-           <property name="text">
-            <string>Primary Key</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
+          <widget class="QTableWidget" name="tableBCNF3"/>
          </item>
         </layout>
        </widget>

@@ -3,7 +3,7 @@
 
 #include "dialog_fd_input.h"
 
-char total_k[20][30];
+char total_k[20][50];
 int PATH[20][20],total_k_count,path_flag=0;
 Dialog_transitive_view *dialog_transitive_view;
 
@@ -108,6 +108,15 @@ void Dialog_path_matrix::generate_ADJ(char ADJ[][20]) {
         det_index=-1;
         dep_index=-1;
     }
+    /*
+    ADJ[11][8]=1;
+    ADJ[10][11]=1;
+    ADJ[10][9]=1;
+    ADJ[10][8]=1;
+    ADJ[8][9]=1;
+    ADJ[8][11]=1;
+    ADJ[8][12]=1;
+    */
 }
 
 void Dialog_path_matrix::on_pathButton_clicked()

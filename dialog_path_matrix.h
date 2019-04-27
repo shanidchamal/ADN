@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <dialog_transitive_view.h>
 
-extern char total_k[20][30];
+extern char total_k[20][50];
 extern int PATH[20][20],total_k_count;
 extern Dialog_transitive_view *dialog_transitive_view;
 

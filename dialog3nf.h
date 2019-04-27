@@ -1,7 +1,11 @@
 #ifndef DIALOG3NF_H
 #define DIALOG3NF_H
 
+#include "dialog_bcnf.h"
+
 #include <QDialog>
+
+int checkNF3_blacklist(int);
 
 namespace Ui {
 class Dialog3nf;
@@ -17,8 +21,10 @@ public:
 
 public slots:
     void printNF3(int,QStringList,QWidget *);
-    int checkNF3_blacklist(int);
     void printClosure3NF(QWidget *);
+
+private slots:
+    void on_nextButton_clicked();
 
 private:
     int checkPkAttr(char[]);
@@ -26,6 +32,7 @@ private:
 
 private:
     Ui::Dialog3nf *ui;
+    Dialog_BCNF *dialog_bcnf;
 };
 
 #endif // DIALOG3NF_H

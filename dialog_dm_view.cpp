@@ -3,6 +3,8 @@
 
 #include "dialog_fd_input.h"
 
+#include <QDebug>
+
 char DM[20][20][30];
 int dm_flag=0;
 
@@ -19,8 +21,10 @@ Dialog_DM_view::Dialog_DM_view(QWidget *parent) :
         for(i=0;i<sim_k_count;i++)
             sim_k_titles << sim_k[i];
 
-        for(i=0;i<fd_count;i++)
+        for(i=0;i<fd_count;i++) {
+            qDebug() << "det_K" << det_k[i];
             det_k_titles << det_k[i];
+        }
 
         ui->tableDM->setColumnCount(sim_k_count);
         ui->tableDM->setRowCount(fd_count);

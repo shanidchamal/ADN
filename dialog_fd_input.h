@@ -49,6 +49,7 @@ private slots:
     void on_ex1Button_clicked();
     void on_ex2Button_clicked();
     void on_cRentalButton_clicked();
+    void on_ext3Button_clicked();
 };
 
 #endif // DIALOG_FD_INPUT_H

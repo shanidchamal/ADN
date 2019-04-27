@@ -5,18 +5,19 @@
 #include "dialog_dm_view.h"
 #include "dialog_transitive_view.h"
 
+#include <QDebug>
 
 char DM2[20][20][30],pk[30];
-int NF_array[15],NF_count,sim_k_blacklist[30],bl_count;
+int NF_array[15],NF_count,sim_k_blacklist[30],bl_count,can_k_count;
 
 Dialog_closure_view::Dialog_closure_view(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_closure_view)
 {
     ui->setupUi(this);
-    int i,j,can_k_index[10],can_k_rank[10],top_rank,pk_rank,pk_index,returnval,stepcount=0;
+    int i,j,can_k_index[10],can_k_rank[10],top_rank,pk_rank,pk_index,returnval,stepcount=0,flag;
     char can_k[10][30];
-    int can_k_count=0;NF_count=0;bl_count=0;
+    can_k_count=0;NF_count=0;bl_count=0;
 
     memset(NF_array,-1,sizeof(NF_array));
     for(i=0;i<10;i++)
@@ -40,9 +41,15 @@ Dialog_closure_view::Dialog_closure_view(QWidget *parent) :
             strcpy(DM2[i][j],DM[i][j]);
     }
 
+    qDebug() << "DM03-1" << DM[0][3];
+
     dependency_closure();
 
+    qDebug() << "DM03-2" << DM[0][3];
+
     circular_dependency();
+
+    qDebug() << "DM03-3" << DM[0][3]; 
 
     can_k_count=candidate_keys(can_k,can_k_index);
     //printf("can_count:%d\n",can_k_count);
@@ -59,16 +66,31 @@ Dialog_closure_view::Dialog_closure_view(QWidget *parent) :
     }
 
     for(i=0;i<fd_count;i++) {
-        for(j=0;j<sim_k_count;j++)
+        for(j=0;j<sim_k_count;j++) {
+            char temp[30];
+            strcpy(temp,DM[i][j]);
             strcpy(DM[i][j],DM2[i][j]);
+            strcpy(DM2[i][j],temp);
+        }
     }
+
+    qDebug() << "DM03-4" << DM[0][3];
 
     dependency_closure2(can_k,can_k_count,pk_index);
 
+    qDebug() << "DM03-5" << DM[0][3];
+
     circular_dependency();
 
+    qDebug() << "DM03-6" << DM[0][3];
+
     for(i=0;i<fd_count;i++) {
+        flag=0;
+        if(checkCanIndex(i,can_k_index))
+            flag=1;
         for(j=0;j<sim_k_count;j++) {
+            if(flag && strcmp(DM[i][j],"0")==0)
+                strcpy(DM[i][j],DM2[i][j]);
             ui->tableClosure->setItem(i,j,new QTableWidgetItem(DM[i][j]));
             ui->tableClosure->item(i,j)->setTextAlignment(Qt::AlignCenter);
         }
@@ -93,13 +115,16 @@ Dialog_closure_view::Dialog_closure_view(QWidget *parent) :
         ui->label_9->setText("No primary key");
     }
 
-    returnval=findPartial(pk_index,&pk_rank);
-    if(returnval!=-1) {
-        stepcount++;
-        strcpy(pk,det_k[returnval]);
-        returnval=findPartial(returnval,&pk_rank);
+    if(can_k_count!=0) {
+        returnval=findPartial(pk_index,&pk_rank);
+        if(returnval!=-1) {
+            stepcount++;
+            strcpy(pk,det_k[returnval]);
+            returnval=findPartial(returnval,&pk_rank);
+        }
+        printf("new Pk:%s\n",pk);
     }
-    printf("new Pk:%s\n",pk);
+
 }
 
 Dialog_closure_view::~Dialog_closure_view()
@@ -115,8 +140,9 @@ void Dialog_closure_view::dependency_closure()
         for(j=0;j<fd_count;j++)
             if(i!=j && det_PATH[i][j]!=-1) {
                 for(k=0;k<sim_k_count;k++)
-                    if(strcmp(DM[j][k],"0")!=0 && strcmp(DM[j][k],"2")!=0)
+                    if(strcmp(DM[j][k],"0")!=0 && strcmp(DM[j][k],"2")!=0) {
                         strcpy(DM[i][k],det_k[j]);
+                    }
                 }
 }
 
@@ -129,12 +155,10 @@ void Dialog_closure_view::dependency_closure2(char can_k[][30],int can_k_count,i
             flag=0;
             //consider dependency through potential candidate keys
             for(l=0;l<can_k_count;l++) {
-                //if(l!=pk_index) {
                 if(strcmp(det_k[j],can_k[l])==0) {
                     flag=1;
                     break;
                 }
-                //}
             }
             if(flag!=1) {
                 if(i!=j && det_PATH[i][j]!=-1) {
@@ -188,6 +212,8 @@ int Dialog_closure_view::candidate_keys(char can_k[][30],int can_k_index[])
     for(i=0;i<fd_count;i++) {
         flag=0;
         for(j=0;j<sim_k_count;j++) {
+            if(i==0)
+                qDebug() << DM[i][j];
             if(strcmp(DM[i][j],"0")==0) {
                 flag=1;
                 break;
@@ -326,6 +352,16 @@ int Dialog_closure_view::findSim_k_Index(char sub_dm_k[])
             return i;
 }
 
+int Dialog_closure_view::checkCanIndex(int index,int can_k_index[]) {
+    int i,flag=0;
+    for(i=0;i<can_k_count;i++)
+        if(can_k_index[i]==index) {
+            flag=1;
+            break;
+        }
+    return flag;
+}
+
 //Mask associated attributes w.r.t partial key
 void Dialog_closure_view::maskAttr()
 {
@@ -354,6 +390,9 @@ void Dialog_closure_view::on_backButton_clicked()
 
 void Dialog_closure_view::on_nextButton_clicked()
 {
-    dialog_2nf=new Dialog2NF(this);
-    dialog_2nf->show();
+    if(can_k_count!=0) {
+        hide();
+        dialog_2nf=new Dialog2NF(this);
+        dialog_2nf->show();
+    }
 }

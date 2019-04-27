@@ -30,6 +30,7 @@ public slots:
     int findPartial(int,int *);
     int findSim_k_Index(char[]);
     void maskAttr();
+    int checkCanIndex(int,int[]);
 
 private slots:
     void on_backButton_clicked();
