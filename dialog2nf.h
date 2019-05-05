@@ -5,6 +5,7 @@
 #include "dialog3nf.h"
 
 extern int NF2_index,bl2_index,bl_count2,NF_blacklist[30];
+extern Dialog3nf *dialog3nf;
 
 int checkRowScope(int);
 int checkColScope(int,int);
@@ -26,11 +27,10 @@ private slots:
     void on_nextButton_clicked();
     void printNF2(int,QStringList,QWidget *);
     void printClosure2NF(QWidget *);
-
+    void on_backButton_clicked();
 
 private:
     Ui::Dialog2NF *ui;
-    Dialog3nf *dialog3nf;
 };
 
 #endif // DIALOG2NF_H

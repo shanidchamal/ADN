@@ -24,6 +24,7 @@ Dialog_BCNF::Dialog_BCNF(QWidget *parent) :
 
     printClosureBCNF(parent);
 
+    ui->label_3->setText(pk);
 }
 
 Dialog_BCNF::~Dialog_BCNF()
@@ -34,7 +35,7 @@ Dialog_BCNF::~Dialog_BCNF()
 void Dialog_BCNF::findBCNF() {
     int i,j;
 
-    for(i=0;i<fd_count;i++) {
+    for(i=0;i<dm_row;i++) {
         if(checkRowScope(i))
             if(strcmp(det_k[i],pk)!=0)
                 for(j=0;j<sim_k_count;j++) {
@@ -119,7 +120,7 @@ void Dialog_BCNF::printClosureBCNF(QWidget *parent) {
     obj->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     obj->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    for(i=0;i<fd_count;i++) {
+    for(i=0;i<dm_row;i++) {
         flag=0;
         if(checkRowScope(i)) {
             flag=1;
@@ -150,3 +151,9 @@ int Dialog_BCNF::checkBCNF_blacklist(int index) {
     return flag;
 }
 
+
+void Dialog_BCNF::on_backButton_clicked()
+{
+    hide();
+    dialog3nf->show();
+}

@@ -2,9 +2,10 @@
 #define DIALOG_TRANSITIVE_VIEW_H
 
 #include <QDialog>
-#include <dialog_closure_view.h>
+#include "dialog_closure_view.h"
 
 extern char det_PATH[20][20];
+extern Dialog_closure_view *dialog_closure_view;
 
 namespace Ui {
 class Dialog_transitive_view;
@@ -24,7 +25,6 @@ private slots:
 
 private:
     Ui::Dialog_transitive_view *ui;
-    Dialog_closure_view *dialog_closure_view;
 };
 
 #endif // DIALOG_TRANSITIVE_VIEW_H

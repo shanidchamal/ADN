@@ -21,6 +21,9 @@ public slots:
     void printClosureBCNF(QWidget *);
     int checkBCNF_blacklist(int);
 
+private slots:
+    void on_backButton_clicked();
+
 private:
     Ui::Dialog_BCNF *ui;
 };

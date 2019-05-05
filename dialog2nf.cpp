@@ -8,6 +8,7 @@
 #include <QDebug>
 
 int pk_index,NF2_index,NF_blacklist[30],bl_count2,bl2_index;
+Dialog3nf *dialog3nf;
 
 Dialog2NF::Dialog2NF(QWidget *parent) :
     QDialog(parent),
@@ -40,8 +41,14 @@ Dialog2NF::~Dialog2NF()
 void Dialog2NF::on_nextButton_clicked()
 {
     hide();
-    dialog3nf = new Dialog3nf(this);
-    dialog3nf->show();
+    if(dialog3nf!=nullptr)
+        dialog3nf->show();
+    else {
+        if(can_flag && strcmp(ck,pk)==0)
+            dm_row-=1;
+        dialog3nf = new Dialog3nf(this);
+        dialog3nf->show();
+    }
 }
 
 int checkRowScope(int index) {
@@ -69,19 +76,37 @@ int checkColScope(int index,int limit) {
 
 void Dialog2NF::printNF2(int index, QStringList uIDs, QWidget *parent) {
     QStringList det_k_titles,sim_k_titles;
-    int j,k,cols=0,bl_index=0;
+    int i,j,k,cols=0,bl_index=0,lossy_flag=0,lossy_list[5],lossy_count=0;
 
     bl_index=bl_count2;
     det_k_titles << det_k[NF_array[index]];
 
+    qDebug() << "printNf2:" << NF_array[index];
+
     for(j=0;j<sim_k_count;j++) {
-            if(checkColScope(j,bl_count2))
-                if(strcmp(DM[NF_array[index]][j],"1")==0 || strcmp(DM[NF_array[index]][j],"2")==0) {
+            if(checkColScope(j,bl_count2)) {
+                if(strcmp(DM[NF_array[index]][j],"1")==0) {
                     sim_k_titles << sim_k[j];
                     NF_blacklist[bl_count2++]=j;
                     cols++;
+                    if(lossy(NF_array[index],j)) {
+                        lossy_flag=1;
+                        lossy_list[lossy_count++]=j;
+                    }
                 }
+                else if(strcmp(DM[NF_array[index]][j],"2")==0)
+                    if(!checkMaskValidity(NF_array[index],j)) {
+                        qDebug() << "pk_index:" << pk_index;
+                        NF_blacklist[bl_count2++]=j;
+                        sim_k_titles << sim_k[j];
+                        cols++;
+                    }
+            }
     }
+
+    qDebug() << "before";
+    for(i=0;i<bl_count2;i++)
+        qDebug() << NF_blacklist[i];
 
     QTableWidget *obj;
     obj=parent->findChild<QTableWidget*>(uIDs[index]);
@@ -96,6 +121,20 @@ void Dialog2NF::printNF2(int index, QStringList uIDs, QWidget *parent) {
         obj->setItem(0,k,new QTableWidgetItem(DM[NF_array[index]][NF_blacklist[j]]));
         obj->item(0,k)->setTextAlignment(Qt::AlignCenter);
     }
+
+    if(lossy_flag)
+        for(i=0;i<lossy_count;i++)
+            for(j=0;j<bl_count2;j++)
+                if(NF_blacklist[j]==lossy_list[i]) {
+                    qDebug() << "at:" << NF_array[index];
+                    for(k=j;k<bl_count2-1;k++)
+                        NF_blacklist[k]=NF_blacklist[k+1];
+                    bl_count2-=1;
+                }
+    qDebug() << "after";
+    for(i=0;i<bl_count2;i++)
+        qDebug() << NF_blacklist[i];
+
 
     obj->resizeColumnsToContents();
     obj->resizeRowsToContents();
@@ -113,6 +152,11 @@ void Dialog2NF::printClosure2NF(QWidget *parent) {
             if(strcmp(det_k[i],pk)==0)
                 pk_index=rows-1;
         }
+    }
+
+    if(can_flag) {
+        det_k_titles.append(ck);
+        rows++;
     }
 
     for(j=0;j<sim_k_count;j++) {
@@ -133,7 +177,7 @@ void Dialog2NF::printClosure2NF(QWidget *parent) {
     obj->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     obj->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    for(i=0;i<fd_count;i++) {
+    for(i=0;i<dm_row;i++) {
         flag=0;
         if(checkRowScope(i)) {
             flag=1;
@@ -149,6 +193,12 @@ void Dialog2NF::printClosure2NF(QWidget *parent) {
             a++;
         b=0;
     }
-    obj->selectRow(pk_index);
+    //obj->selectRow(pk_index);
     obj->setSelectionMode(QAbstractItemView::NoSelection);
+}
+
+void Dialog2NF::on_backButton_clicked()
+{
+    hide();
+    dialog_closure_view->show();
 }

@@ -6,6 +6,7 @@
 #include <QDialog>
 
 int checkNF3_blacklist(int);
+extern Dialog_BCNF *dialog_bcnf;
 
 namespace Ui {
 class Dialog3nf;
@@ -26,13 +27,14 @@ public slots:
 private slots:
     void on_nextButton_clicked();
 
+    void on_backButton_clicked();
+
 private:
     int checkPkAttr(char[]);
     void findTransitive();
 
 private:
     Ui::Dialog3nf *ui;
-    Dialog_BCNF *dialog_bcnf;
 };
 
 #endif // DIALOG3NF_H

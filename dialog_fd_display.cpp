@@ -13,7 +13,29 @@ Dialog_fd_display::Dialog_fd_display(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->label_9->setText(print_det_fd(0));
+    QStringList titles;
+    int i;
+
+    titles << "LHS" << "-->" << "RHS";
+
+    ui->tableFdView->setColumnCount(3);
+    ui->tableFdView->setRowCount(fd_count);
+    ui->tableFdView->setHorizontalHeaderLabels(titles);
+    ui->tableFdView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    for(i=0;i<fd_count;i++) {
+        ui->tableFdView->setItem(i,0,new QTableWidgetItem(det_k[i]));
+        ui->tableFdView->setItem(i,1,new QTableWidgetItem("-->"));
+        ui->tableFdView->setItem(i,2,new QTableWidgetItem(print_dep_fd(i)));
+    }
+
+    for(i=0;i<fd_count;i++)
+        ui->tableFdView->item(i,1)->setTextAlignment(Qt::AlignCenter);
+
+    ui->tableFdView->resizeColumnsToContents();
+    ui->tableFdView->resizeRowsToContents();
+
+    /*ui->label_9->setText(print_det_fd(0));
 
     ui->label_22->setText(print_dep_fd(0));
 
@@ -36,6 +58,7 @@ Dialog_fd_display::Dialog_fd_display(QWidget *parent) :
     ui->label_14->setText(print_det_fd(5));
 
     ui->label_27->setText(print_dep_fd(5));
+    */
 
 }
 

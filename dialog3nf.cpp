@@ -7,6 +7,7 @@
 #include <QDebug>
 
 int NF3_blacklist[30],bl3_count;
+Dialog_BCNF *dialog_bcnf;
 
 Dialog3nf::Dialog3nf(QWidget *parent) :
     QDialog(parent),
@@ -27,6 +28,8 @@ Dialog3nf::Dialog3nf(QWidget *parent) :
         printNF3(i,tIDs,parent);
 
     printClosure3NF(parent);
+
+    ui->label_3->setText(pk);
 }
 
 Dialog3nf::~Dialog3nf()
@@ -37,7 +40,9 @@ Dialog3nf::~Dialog3nf()
 void Dialog3nf::findTransitive() {
     int i,j;
 
-    for(i=0;i<fd_count;i++) {
+    qDebug() << "dm_row@3" << dm_row;
+
+    for(i=0;i<dm_row;i++) {
         if(checkRowScope(i))
             if(strcmp(det_k[i],pk)!=0)
                 if(!checkPkAttr(det_k[i]))
@@ -167,7 +172,7 @@ void Dialog3nf::printClosure3NF(QWidget *parent) {
     obj->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     obj->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    for(i=0;i<fd_count;i++) {
+    for(i=0;i<dm_row;i++) {
         flag=0;
         if(checkRowScope(i)) {
             flag=1;
@@ -190,6 +195,16 @@ void Dialog3nf::printClosure3NF(QWidget *parent) {
 void Dialog3nf::on_nextButton_clicked()
 {
     hide();
-    dialog_bcnf=new Dialog_BCNF(this);
-    dialog_bcnf->show();
+    if(dialog_bcnf!=nullptr)
+        dialog_bcnf->show();
+    else {
+        dialog_bcnf=new Dialog_BCNF(this);
+        dialog_bcnf->show();
+    }
+}
+
+void Dialog3nf::on_backButton_clicked()
+{
+    hide();
+    dialog_2nf->show();
 }

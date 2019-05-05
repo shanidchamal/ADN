@@ -23,8 +23,8 @@ struct dep_fd_node{
 
 extern struct det_fd_node *det_head[6];
 extern struct dep_fd_node *dep_head[6];
-extern int fd_count,sim_k_count;
-extern char det_k[30][30],sim_k[30][30];
+extern int fd_count,sim_k_count,noof_lhs;
+extern char det_k[30][30],sim_k[30][30],LHSonly[10][30];
 
 namespace Ui {
 class Dialog_fd_input;
@@ -45,6 +45,7 @@ private:
 private slots:
     void create_det_FD(int , char*);
     void create_dep_FD(int, char*);
+    void getLHSsim_k();
     void on_push_fd_Button_clicked();
     void on_ex1Button_clicked();
     void on_ex2Button_clicked();

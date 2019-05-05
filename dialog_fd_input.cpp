@@ -1,10 +1,12 @@
 #include "dialog_fd_input.h"
 #include "ui_dialog_fd_input.h"
 
+#include <QDebug>
+
 struct det_fd_node *det_head[6];
 struct dep_fd_node *dep_head[6];
-int fd_count=0,sim_k_count=0;
-char det_k[30][30],sim_k[30][30];
+int fd_count=0,sim_k_count=0,noof_lhs;
+char det_k[30][30],sim_k[30][30],LHSonly[10][30];
 
 Dialog_fd_input::Dialog_fd_input(QWidget *parent) :
     QDialog(parent),
@@ -30,7 +32,7 @@ void Dialog_fd_input::create_det_FD(int count,char* fd) {
     char * subs = (char *)sub_fd;
     char tok[]=",";
     char * tmp = (char *)fd;
-    int i,flag=0;
+    //int i,flag=0;
 
     //store det_k (determinant key set)
     strcpy(det_k[count],fd);
@@ -40,7 +42,7 @@ void Dialog_fd_input::create_det_FD(int count,char* fd) {
         sprintf(subs, "%.*s", l, tmp);
         //store sim_k (simple key set)
         //check if sub key is present in sim_k
-        for(i=0;i<sim_k_count;i++) {
+        /*for(i=0;i<sim_k_count;i++) {
             if(strcmp(sim_k[i],sub_fd)==0) {
                 flag=1;
                 break;
@@ -48,7 +50,7 @@ void Dialog_fd_input::create_det_FD(int count,char* fd) {
         }
         if(flag==0)
             strcpy(sim_k[sim_k_count++],sub_fd);
-        flag=0;
+        flag=0;*/
         tmp += l+1;
 
         struct det_fd_node *temp;
@@ -85,8 +87,10 @@ void Dialog_fd_input::create_dep_FD(int count,char* fd) {
                 break;
             }
         }
-        if(flag==0)
+        if(flag==0) {
             strcpy(sim_k[sim_k_count++],sub_fd);
+            qDebug() << "sim_kadded:" << sim_k[sim_k_count-1];
+        }
         flag=0;
         tmp += l+1;
 
@@ -106,11 +110,46 @@ void Dialog_fd_input::create_dep_FD(int count,char* fd) {
     } while(tmp[-1]);
 }
 
+void Dialog_fd_input::getLHSsim_k() {
+    char sub_det_k[30];
+    char * subs = (char *)sub_det_k;
+    char tok[]=",";
+    int i,j,flag=0;
+
+    qDebug() << "fd_count:" << fd_count;
+
+    for(i=0;i<fd_count;i++) {
+        char * tmp = (char *)det_k[i];
+
+    do {
+        int l = strcspn(tmp, tok);
+        sprintf(subs, "%.*s", l, tmp);
+        //store sim_k (simple key set)
+        //check if sub key is present in sim_k
+        for(j=0;j<sim_k_count;j++) {
+            qDebug() << "checkingLHS:" << sub_det_k;
+            if(strcmp(sim_k[j],sub_det_k)==0) {
+                flag=1;
+                break;
+            }
+        }
+        if(flag==0) {
+            strcpy(sim_k[sim_k_count++],sub_det_k);
+            qDebug() << "sim_kaddedlhS:" << sim_k[sim_k_count-1];
+            strcpy(LHSonly[noof_lhs++],sub_det_k);
+            qDebug() << "LHsonly:" << sub_det_k;
+        }
+        flag=0;
+        tmp += l+1;
+        }while(tmp[-1]);
+    }
+}
+
 void Dialog_fd_input::on_push_fd_Button_clicked()
 {
 
     char det_fd[50],dep_fd[100];
-    if(!(ui->lineEdit_1->text().isEmpty() || ui->lineEdit_7->text().isEmpty())){
+    if(!(ui->lineEdit_1->text().isEmpty() || ui->lineEdit_7->text().isEmpty())) {
         QString det_fd1 = ui->lineEdit_1->text();
         QString dep_fd1 = ui->lineEdit_7->text();
         strcpy(det_fd, det_fd1.toStdString().c_str());
@@ -170,6 +209,8 @@ void Dialog_fd_input::on_push_fd_Button_clicked()
         fd_count++;
     }
 
+    getLHSsim_k();
+
     if(fd_count>0) {
         hide();
         dialog_fd_display = new Dialog_fd_display(this);
@@ -203,6 +244,8 @@ void Dialog_fd_input::on_ex1Button_clicked()
     create_dep_FD(fd_count,"K");
     fd_count++;
 
+    getLHSsim_k();
+
     hide();
     dialog_fd_display = new Dialog_fd_display(this);
     dialog_fd_display->show();
@@ -233,6 +276,8 @@ void Dialog_fd_input::on_ex2Button_clicked()
     create_det_FD(fd_count,"B,C,F");
     create_dep_FD(fd_count,"A,D,E");
     fd_count++;
+
+    getLHSsim_k();
 
     hide();
     dialog_fd_display = new Dialog_fd_display(this);
@@ -265,6 +310,8 @@ void Dialog_fd_input::on_cRentalButton_clicked()
     create_dep_FD(fd_count,"clientNo,cName,pAddress,rentFinish,rent,ownerNo,oName");
     fd_count++;
 
+    getLHSsim_k();
+
     hide();
     dialog_fd_display = new Dialog_fd_display(this);
     dialog_fd_display->show();
@@ -287,6 +334,8 @@ void Dialog_fd_input::on_ext3Button_clicked()
     create_det_FD(fd_count,"staffNo,date");
     create_dep_FD(fd_count,"roomNo");
     fd_count++;
+
+    getLHSsim_k();
 
     hide();
     dialog_fd_display = new Dialog_fd_display(this);

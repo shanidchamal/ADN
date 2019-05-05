@@ -7,6 +7,8 @@
 char det_PATH[20][20];
 int transitve_flag=0;
 
+Dialog_closure_view *dialog_closure_view;
+
 Dialog_transitive_view::Dialog_transitive_view(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_transitive_view)
@@ -101,7 +103,11 @@ void Dialog_transitive_view::on_nextButton_clicked()
 {
     if(transitve_flag==1) {
         hide();
-        dialog_closure_view=new Dialog_closure_view(this);
-        dialog_closure_view->show();
+        if(dialog_closure_view!=nullptr)
+            dialog_closure_view->show();
+        else {
+            dialog_closure_view=new Dialog_closure_view(this);
+            dialog_closure_view->show();
+        }
     }
 }

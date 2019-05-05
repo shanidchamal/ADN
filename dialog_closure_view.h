@@ -4,8 +4,13 @@
 #include <QDialog>
 #include "dialog2nf.h"
 
-extern int NF_array[15],NF_count,bl_count;
-extern char pk[30];
+extern int NF_array[15],NF_count,bl_count,dm_row,can_flag;
+extern char pk[30],ck[30],new_pk[30];
+extern Dialog2NF *dialog_2nf;
+int checkMaskValidity(int,int);
+int checkCanIndex(int,int[]);
+int checkCK(int,int[]);
+int lossy(int,int);
 
 namespace Ui {
 class Dialog_closure_view;
@@ -25,12 +30,17 @@ public slots:
     void circular_dependency();
     int FindOne(int,int,int);
     int candidate_keys(char[][30],int[]);
-    int findKeyRank(char[][30],int[],int);
+    void candidate_key(char[][30],int);
+    int findKeyRank(char[][30],int[],int,int);
     int primary_key(char[][30],int[],int,int[],int);
-    int findPartial(int,int *);
+    int findPartial(int,int *,int);
+    int checkLHSonly(int);
+    int checkSim_k_blacklist(int);
     int findSim_k_Index(char[]);
     void maskAttr();
-    int checkCanIndex(int,int[]);
+    int getDetKIndex(char[]);
+    int checkRHS(int);
+    void append2DM();
 
 private slots:
     void on_backButton_clicked();
@@ -39,7 +49,6 @@ private slots:
 
 private:
     Ui::Dialog_closure_view *ui;
-    Dialog2NF *dialog_2nf;
 };
 
 #endif // DIALOG_CLOSURE_VIEW_H
